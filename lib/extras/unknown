@@ -1,0 +1,320 @@
+Homepage.dart
+
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:testappbd/Http%20Requests/itemsjsonlists.dart';
+
+import 'package:testappbd/Items/PlusPumps.dart';
+import 'package:testappbd/Items/iteminfo.dart';
+import 'package:testappbd/Items/items.dart';
+import 'package:testappbd/extras/Drawer/drawer.dart';
+import 'package:testappbd/extras/Notifications/notifications.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Items> itemss = Iteminfo.getItems();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+//--------------------------------------------APP BAR ---------------------------------------
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.blue[900],
+        title: Text("Home"),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.notification_important,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          new NotificationPage()));
+            },
+          )
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search",
+                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+      drawer: MainDrawer(),
+//------------------------------------------BODY------------------------------------------
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Text("Plus Pumps",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold)),
+              trailing: Container(
+                child: TextButton(
+                  child: Text(
+                    'View All',
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                new PlusPumpsPage()));
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: 150.0,
+              child: ListView.builder(
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Container(
+                      height: 150,
+                      width: 150,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                    child: Image.asset(
+                                        "assets/images/" +
+                                            itemss[index].imgName +
+                                            ".png",
+                                        fit: BoxFit.cover)),
+                                Text(
+                                  itemss[index].title,
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Regular',
+                                      fontSize: 16.0),
+                                ),
+                                Text(
+                                  itemss[index].subtitle,
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Regular',
+                                      fontSize: 16.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ));
+                },
+              ),
+            ),
+            //------------------------------------------------------------------------------------------------
+            ListTile(
+              leading: Text("Plus Pumps",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold)),
+              trailing: Container(
+                child: TextButton(
+                  child: Text(
+                    'View All',
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                new PlusPumpsPage()));
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: 150.0,
+              child: ListView.builder(
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Container(
+                      height: 150,
+                      width: 150,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                    child: Image.asset(
+                                        "assets/images/" +
+                                            itemss[index].imgName +
+                                            ".png",
+                                        fit: BoxFit.cover)),
+                                Text(
+                                  itemss[index].title,
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Regular',
+                                      fontSize: 16.0),
+                                ),
+                                Text(
+                                  itemss[index].subtitle,
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins-Regular',
+                                      fontSize: 16.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ));
+                },
+              ),
+            ),
+            //-----------------------------------------------------------------------------------------------------------
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.message_outlined),
+        backgroundColor: Colors.orange[600],
+        foregroundColor: Colors.white,
+        onPressed: () => {},
+      ),
+    ));
+  }
+}
+
+
+//--------------------------------------------http requests---------------------------------------------------------------
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:testappbd/Http%20Requests/httprequests.dart';
+import 'package:testappbd/Http%20Requests/itemsjsonlists.dart';
+import 'package:testappbd/extras/Drawer/drawer.dart';
+import 'package:testappbd/extras/Notifications/notifications.dart';
+import 'package:testappbd/extras/Widgets/lists.dart';
+
+class HomePage extends StatelessWidget {
+  final HttpService httpService = HttpService();
+  // final Categories category;
+  //final SubCategory subCategory;
+
+  //HomePage({required this.category, required this.subCategory});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+//--------------------------------------------APP BAR ---------------------------------------
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.blue[900],
+        title: Text("Home"),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.notification_important,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          new NotificationPage()));
+            },
+          )
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search",
+                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+      drawer: MainDrawer(),
+//------------------------------------------BODY------------------------------------------
+      body: FutureBuilder(
+        future: httpService.getCategories(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Categories>> snapshot) {
+          if (snapshot.hasData) {
+            List<Categories>? categories = snapshot.data;
+            return AppCard(
+              child: ListView(
+                children: categories!
+                    .map(
+                      (Categories categories) => ListTile(
+                        title: Text(categories.title),
+                        subtitle: Text(categories.title),
+                      ),
+                    )
+                    .toList(),
+              ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.message_outlined),
+        backgroundColor: Colors.orange[600],
+        foregroundColor: Colors.white,
+        onPressed: () => {},
+      ),
+    ));
+  }
+}
